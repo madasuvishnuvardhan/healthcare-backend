@@ -43,4 +43,8 @@ public class PrescriptionService {
     public List<Prescription> getPrescriptionsByUser(User user) {
         return prescriptionRepository.findByUser(user);
     }
+
+    public List<Prescription> getAllPrescriptions() {
+        return prescriptionRepository.findAll();
+    }
 }

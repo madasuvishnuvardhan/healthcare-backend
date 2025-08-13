@@ -9,13 +9,28 @@ public class Prescription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    public Integer getId() {
+    @ManyToOne(fetch = FetchType.EAGER) // <-- CHANGED FROM LAZY
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "file_url")
+    private String fileUrl;
+
+    @Column(name = "issued_date")
+    private LocalDateTime issuedDate;
+
+    @PrePersist
+    protected void onCreate() {
+        issuedDate = LocalDateTime.now();
+    }
+    
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -42,21 +57,4 @@ public class Prescription {
 	public void setIssuedDate(LocalDateTime issuedDate) {
 		this.issuedDate = issuedDate;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @Column(name = "file_url")
-    private String fileUrl;
-
-    @Column(name = "issued_date")
-    private LocalDateTime issuedDate;
-
-    @PrePersist
-    protected void onCreate() {
-        issuedDate = LocalDateTime.now();
-    }
-
-    // Constructors, getters, setters
 }

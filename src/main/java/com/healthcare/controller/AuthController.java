@@ -38,7 +38,7 @@ public class AuthController {
         User existingUser = userRepo.findByEmail(user.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            String token = jwtService.generateToken(user.getEmail());
+            String token = jwtService.generateToken(existingUser);
             return Map.of("token", token);
         } else {
             throw new RuntimeException("Invalid credentials");

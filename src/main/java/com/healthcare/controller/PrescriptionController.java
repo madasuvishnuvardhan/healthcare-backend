@@ -5,6 +5,7 @@ import com.healthcare.model.User;
 import com.healthcare.repository.UserRepository;
 import com.healthcare.service.PrescriptionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,12 @@ public class PrescriptionController {
         User user = getCurrentUser();
         List<Prescription> prescriptions = prescriptionService.getPrescriptionsByUser(user);
         return ResponseEntity.ok(prescriptions);
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Prescription>> getAllPrescriptions() {
+        return ResponseEntity.ok(prescriptionService.getAllPrescriptions());
     }
     
     private User getCurrentUser() {

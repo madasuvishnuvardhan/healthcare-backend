@@ -9,52 +9,50 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id; // CHANGED FROM Integer to Long
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     @JsonBackReference
     private Order order;
 
-    // VVV CHANGE IS HERE VVV
-    @ManyToOne(fetch = FetchType.EAGER) // <-- Change LAZY to EAGER
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
 
-    public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
-	public Medicine getMedicine() {
-		return medicine;
-	}
-
-	public void setMedicine(Medicine medicine) {
-		this.medicine = medicine;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	@Column(nullable = false)
+    @Column(nullable = false)
     private Integer quantity;
 
-    // Constructors, getters, setters
+
+    public Long getId() { // CHANGED FROM Integer to Long
+        return id;
+    }
+
+    public void setId(Long id) { // CHANGED FROM Integer to Long
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Medicine getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }
